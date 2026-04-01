@@ -161,6 +161,29 @@
             background: var(--blue-light);
             padding: 1rem 1.5rem;
             border-bottom: 3px solid var(--blue);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            user-select: none;
+        }
+
+        .section-header .toggle-icon {
+            font-size: 1.2rem;
+            color: var(--blue);
+            transition: transform 0.2s;
+        }
+
+        .section-header.collapsed .toggle-icon {
+            transform: rotate(-90deg);
+        }
+
+        .section-header.collapsed {
+            border-bottom: none;
+        }
+
+        .section-body.hidden {
+            display: none;
         }
 
         .section-header h2 {
@@ -499,7 +522,7 @@
                 -webkit-print-color-adjust: exact;
                 print-color-adjust: exact;
             }
-            .known-issues-body.hidden { display: block !important; }
+            .known-issues-body.hidden, .section-body.hidden { display: block !important; }
             .toggle-icon { display: none; }
             .footer { padding: 1rem; }
         }
@@ -549,8 +572,17 @@
 
             <div class="issue-item">
                 <div class="issue-title">MacBook Users: Launch TestNav from the Applications Folder</div>
-                <div class="issue-date">Posted March 31, 2026</div>
-                <p>Students on MacBooks must open the <strong>TestNav app</strong> from the Applications folder (Finder &rarr; Applications &rarr; TestNav). Do <strong>not</strong> let students search for "TestNav" in a browser. If the app is missing from a device, Google will take them to the TestNav website, which looks legitimate and will let them sign in &mdash; but it is <strong>not</strong> the correct testing environment and their session will not count. If any device is missing the TestNav application, contact the tech team immediately rather than using the website.</p>
+                <div class="issue-date">Updated April 1, 2026</div>
+                <img src="images/apps-nav-go-menu.jpg" alt="Finder menu bar showing Go menu with Applications option, or keyboard shortcut Command-Shift-A" style="float:right; max-width:300px; margin:0 0 0.75rem 1rem; border-radius:6px;">
+                <p><strong style="font-size:1.05rem;">MAC USERS:</strong> To get to the Applications folder, click on your Desktop to enter the "Finder" mode, then either press <strong>Command-Shift-A</strong>, or click on the <strong>"Go"</strong> menu, then choose <strong>"Applications."</strong> Now find the <strong>TestNav</strong> app. You can press <strong>"T"</strong> to jump down to apps that start with the letter T.</p>
+                <p style="margin-top:0.75rem;">Do <strong>not</strong> let students search for "TestNav" in a browser. If the app is missing from a device, Google will take them to the TestNav website, which looks legitimate and will let them sign in &mdash; but it is <strong>not</strong> the correct testing environment and their session will not count. If any device is missing the TestNav application, contact the tech team immediately rather than using the website.</p>
+                <div style="clear:both;"></div>
+            </div>
+
+            <div class="issue-item">
+                <div class="issue-title">Allow Camera &amp; Microphone Access When Prompted</div>
+                <div class="issue-date">Posted April 1, 2026</div>
+                <p>Students may see a prompt asking to allow access to the <strong>camera and microphone</strong>. They must click <strong>Allow</strong>. Only the microphone is used during the assessment &mdash; the camera is not &mdash; but the prompt may mention both. If a student denies access, TestNav may not allow the test to proceed, and fixing it requires going into the device's settings, which significantly delays testing.</p>
             </div>
 
         </div>
@@ -574,8 +606,9 @@
 
     <!-- ════════════════════ 1. WHAT YOU'LL NEED ════════════════════ -->
     <div class="section" id="what-you-need">
-        <div class="section-header">
+        <div class="section-header" onclick="toggleSection(this)">
             <h2><span class="section-number">1</span> What You'll Need</h2>
+            <span class="toggle-icon">&#9660;</span>
         </div>
         <div class="section-body">
             <ul class="checklist">
@@ -597,15 +630,16 @@
                 </li>
             </ul>
             <div class="screenshot has-image">
-                <img src="images/proctor-card-example.jpg" alt="Example proctor card showing Test Code, Proctor Password, and Seal Codes" style="max-width:520px;">
+                <img src="images/proctor-card-example.jpg" alt="Example proctor card showing Test Code, Proctor Password, and Seal Codes" style="max-width:320px;">
             </div>
         </div>
     </div>
 
     <!-- ════════════════════ 2. BEFORE TEST DAY ════════════════════ -->
     <div class="section" id="before-test-day">
-        <div class="section-header">
+        <div class="section-header" onclick="toggleSection(this)">
             <h2><span class="section-number">2</span> Before Test Day</h2>
+            <span class="toggle-icon">&#9660;</span>
         </div>
         <div class="section-body">
             <div class="callout callout-tip">
@@ -655,8 +689,9 @@
 
     <!-- ════════════════════ 3. PROCTOR SETUP ════════════════════ -->
     <div class="section" id="proctor-setup">
-        <div class="section-header">
+        <div class="section-header" onclick="toggleSection(this)">
             <h2><span class="section-number">3</span> Proctor Setup</h2>
+            <span class="toggle-icon">&#9660;</span>
         </div>
         <div class="section-body">
             <div class="step">
@@ -681,7 +716,7 @@
                 <div class="step-content">
                     <p>Enter your <strong>first and last name</strong>, check the <strong>"I Agree"</strong> box on the Proctor Acknowledgment, and click <strong>Save</strong>.</p>
                     <div class="screenshot has-image">
-                        <img src="images/proctor-acknowledge.png" alt="Proctor name entry and acknowledgment form with I Agree checkbox and Save button" style="max-width:400px;">
+                        <img src="images/proctor-acknowledge.png" alt="Proctor name entry and acknowledgment form with I Agree checkbox and Save button" style="max-width:280px;">
                     </div>
                 </div>
             </div>
@@ -691,7 +726,7 @@
                 <div class="step-content">
                     <p>You're now in the proctoring platform. <strong>Display the Test Code</strong> for students &mdash; write it on the board or use the <strong>Display</strong> button in the top-right corner to project it.</p>
                     <div class="screenshot has-image">
-                        <img src="images/proctor-dashboard-actions.png" alt="Proctor dashboard Actions panel showing Test Code, Proctor Password, Seal Codes, and Display button">
+                        <img src="images/proctor-dashboard-actions.png" alt="Proctor dashboard Actions panel showing Test Code, Proctor Password, Seal Codes, and Display button" style="max-width:70%;">
                     </div>
                 </div>
             </div>
@@ -700,8 +735,9 @@
 
     <!-- ════════════════════ 4. STUDENT LOGIN ════════════════════ -->
     <div class="section" id="student-login">
-        <div class="section-header">
+        <div class="section-header" onclick="toggleSection(this)">
             <h2><span class="section-number">4</span> Student Login</h2>
+            <span class="toggle-icon">&#9660;</span>
         </div>
         <div class="section-body">
             <div class="step">
@@ -751,8 +787,9 @@
 
     <!-- ════════════════════ 5. RUNNING THE TEST ════════════════════ -->
     <div class="section" id="running-the-test">
-        <div class="section-header">
+        <div class="section-header" onclick="toggleSection(this)">
             <h2><span class="section-number">5</span> Running the Test</h2>
+            <span class="toggle-icon">&#9660;</span>
         </div>
         <div class="section-body">
             <div class="step">
@@ -775,7 +812,7 @@
                         <li style="padding:0.35rem 0; color:var(--gray);"><strong style="color:var(--blue-dark);">MacBooks:</strong> A dialog will ask to confirm <strong>App Self-Lock</strong>. Students must click <strong>"Yes"</strong> to proceed.</li>
                     </ul>
                     <div class="screenshot has-image">
-                        <img src="images/self-lock.png" alt="Confirm App Self-Lock dialog on MacBook — student clicks Yes" style="max-width:340px;">
+                        <img src="images/self-lock.png" alt="Confirm App Self-Lock dialog on MacBook — student clicks Yes" style="max-width:240px;">
                     </div>
                 </div>
             </div>
@@ -801,8 +838,9 @@
 
     <!-- ════════════════════ 6. WRAPPING UP ════════════════════ -->
     <div class="section" id="wrapping-up">
-        <div class="section-header">
+        <div class="section-header" onclick="toggleSection(this)">
             <h2><span class="section-number">6</span> Wrapping Up</h2>
+            <span class="toggle-icon">&#9660;</span>
         </div>
         <div class="section-body">
             <div class="step">
@@ -833,8 +871,9 @@
 
     <!-- ════════════════════ 7. SEAL CODE REFERENCE ════════════════════ -->
     <div class="section" id="seal-codes">
-        <div class="section-header">
+        <div class="section-header" onclick="toggleSection(this)">
             <h2><span class="section-number">7</span> Seal Code Reference</h2>
+            <span class="toggle-icon">&#9660;</span>
         </div>
         <div class="section-body">
             <p style="margin-bottom:1rem; color:var(--gray);">Each test has its own proctor card with its own Seal Codes. You will proctor <strong>three separate tests</strong> this year:</p>
@@ -886,8 +925,9 @@
 
     <!-- ════════════════════ 8. STATUS REFERENCE ════════════════════ -->
     <div class="section" id="status-reference">
-        <div class="section-header">
+        <div class="section-header" onclick="toggleSection(this)">
             <h2><span class="section-number">8</span> Status Icons Quick Reference</h2>
+            <span class="toggle-icon">&#9660;</span>
         </div>
         <div class="section-body">
             <p style="margin-bottom:1rem; color:var(--gray);">These are the statuses you'll see on the proctor dashboard:</p>
@@ -935,7 +975,7 @@
                 <div class="step-content">
                     <p>Click the <strong>three-dot menu</strong> (&#8942;) next to the student's name and select <strong>"Reseat Session."</strong> Confirm when prompted.</p>
                     <div class="screenshot has-image">
-                        <img src="images/reseat-menu.png" alt="Three-dot Actions menu showing Pause Session and Reseat Session options">
+                        <img src="images/reseat-menu.png" alt="Three-dot Actions menu showing Pause Session and Reseat Session options" style="max-width:70%;">
                     </div>
                 </div>
             </div>
@@ -980,9 +1020,25 @@
 
 <!-- ════════════════════ JAVASCRIPT ════════════════════ -->
 <script>
+    // Start with everything collapsed
+    document.addEventListener('DOMContentLoaded', function() {
+        document.querySelector('.known-issues-header').classList.add('collapsed');
+        document.getElementById('known-issues-body').classList.add('hidden');
+        document.querySelectorAll('.section-header').forEach(function(header) {
+            header.classList.add('collapsed');
+            header.nextElementSibling.classList.add('hidden');
+        });
+    });
+
     function toggleKnownIssues() {
         const body = document.getElementById('known-issues-body');
         const header = document.querySelector('.known-issues-header');
+        body.classList.toggle('hidden');
+        header.classList.toggle('collapsed');
+    }
+
+    function toggleSection(header) {
+        const body = header.nextElementSibling;
         body.classList.toggle('hidden');
         header.classList.toggle('collapsed');
     }
