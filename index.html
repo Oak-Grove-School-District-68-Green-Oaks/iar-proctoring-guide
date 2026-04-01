@@ -545,6 +545,12 @@
             </div>
 
             <div class="issue-item">
+                <div class="issue-title">Two Device Types This Year</div>
+                <div class="issue-date">Posted March 31, 2026</div>
+                <p>Students will be testing on <strong>Chromebooks</strong> or <strong>MacBooks</strong> this year. The setup steps differ slightly for each &mdash; see the device-specific instructions in Sections 2 and 4 below.</p>
+            </div>
+
+            <div class="issue-item">
                 <div class="issue-title">MacBook Users: Launch TestNav from the Applications Folder</div>
                 <div class="issue-date">Posted March 31, 2026</div>
                 <p>Students on MacBooks must open the <strong>TestNav app</strong> from the Applications folder (Finder &rarr; Applications &rarr; TestNav). Do <strong>not</strong> let students search for "TestNav" in a browser. If the app is missing from a device, Google will take them to the TestNav website, which looks legitimate and will let them sign in &mdash; but it is <strong>not</strong> the correct testing environment and their session will not count. If any device is missing the TestNav application, contact the tech team immediately rather than using the website.</p>
@@ -619,7 +625,11 @@
             <div class="step">
                 <span class="step-number">2</span>
                 <div class="step-content">
-                    <p><strong>Open the TestNav application</strong> from the Applications folder. Do not search for TestNav in a browser.</p>
+                    <p><strong>Launch TestNav.</strong></p>
+                    <ul style="list-style:none; margin:0.5rem 0 0;">
+                        <li style="padding:0.35rem 0; color:var(--gray);"><strong style="color:var(--blue-dark);">Chromebooks:</strong> Log out of the Chromebook. On the login screen, select the <strong>TestNav</strong> kiosk app to launch it.</li>
+                        <li style="padding:0.35rem 0; color:var(--gray);"><strong style="color:var(--blue-dark);">MacBooks:</strong> Open the <strong>TestNav app</strong> from the Applications folder (Finder &rarr; Applications &rarr; TestNav). Do <strong>not</strong> search for TestNav in a browser.</li>
+                    </ul>
                 </div>
             </div>
 
@@ -639,7 +649,7 @@
                 <div class="step-content">
                     <p><strong>Test audio and microphone.</strong> Students should allow microphone access when prompted.</p>
                     <div class="callout callout-warning">
-                        <strong>Important:</strong> If a student denies microphone access, TestNav will likely not allow the test to proceed. The only fix is to go into the device's Security &amp; Privacy settings, which significantly delays testing.
+                        <strong>Important:</strong> If a student denies microphone access, TestNav will likely not allow the test to proceed. The only fix is to go into the device's settings, which significantly delays testing.
                     </div>
                 </div>
             </div>
@@ -700,7 +710,11 @@
             <div class="step">
                 <span class="step-number">1</span>
                 <div class="step-content">
-                    <p>Students <strong>restart their devices</strong>, then open the <strong>TestNav app</strong> from the Applications folder.</p>
+                    <p>Students <strong>restart their devices</strong>, then launch TestNav:</p>
+                    <ul style="list-style:none; margin:0.5rem 0 0;">
+                        <li style="padding:0.35rem 0; color:var(--gray);"><strong style="color:var(--blue-dark);">Chromebooks:</strong> Log out, then select the <strong>TestNav</strong> kiosk app from the login screen.</li>
+                        <li style="padding:0.35rem 0; color:var(--gray);"><strong style="color:var(--blue-dark);">MacBooks:</strong> Open <strong>TestNav</strong> from the Applications folder.</li>
+                    </ul>
                 </div>
             </div>
 
@@ -758,9 +772,13 @@
             <div class="step">
                 <span class="step-number">2</span>
                 <div class="step-content">
-                    <p>Student devices will prompt for <strong>App Self-Lock</strong> (kiosk mode). Students must tap <strong>"Yes"</strong> to proceed.</p>
+                    <p>Student devices will enter <strong>kiosk mode</strong> (locked to TestNav).</p>
+                    <ul style="list-style:none; margin:0.5rem 0 0;">
+                        <li style="padding:0.35rem 0; color:var(--gray);"><strong style="color:var(--blue-dark);">Chromebooks:</strong> Already running in kiosk mode &mdash; no prompt needed.</li>
+                        <li style="padding:0.35rem 0; color:var(--gray);"><strong style="color:var(--blue-dark);">MacBooks:</strong> A dialog will ask to confirm <strong>App Self-Lock</strong>. Students must click <strong>"Yes"</strong> to proceed.</li>
+                    </ul>
                     <div class="screenshot has-image">
-                        <img src="images/self-lock.png" alt="Confirm App Self-Lock dialog — student taps Yes to enter kiosk mode" style="max-width:340px;">
+                        <img src="images/self-lock.png" alt="Confirm App Self-Lock dialog on MacBook — student clicks Yes" style="max-width:340px;">
                     </div>
                 </div>
             </div>
