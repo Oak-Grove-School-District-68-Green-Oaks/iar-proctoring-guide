@@ -440,7 +440,7 @@
         }
 
         .rescue-header h2 {
-            font-size: 1.3rem;
+            font-size: 2.2rem;
             color: var(--red-border);
         }
 
@@ -502,6 +502,65 @@
             font-size: 0.95rem;
         }
 
+        /* ── Search ── */
+        .search-container {
+            background: var(--white);
+            padding: 0.75rem 2rem;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .search-wrapper {
+            max-width: 1060px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 0.6rem 1rem 0.6rem 2.5rem;
+            border: 2px solid var(--blue-muted);
+            border-radius: 8px;
+            font-size: 0.95rem;
+            font-family: inherit;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .search-input:focus {
+            border-color: var(--blue);
+        }
+
+        .search-input::placeholder {
+            color: var(--gray-muted);
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 0.8rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--gray-muted);
+            font-size: 1rem;
+            pointer-events: none;
+        }
+
+        .search-results-info {
+            font-size: 0.8rem;
+            color: var(--gray-muted);
+            margin-top: 0.4rem;
+            display: none;
+        }
+
+        mark.search-highlight {
+            background: #fef08a;
+            color: inherit;
+            padding: 0.1rem 0.15rem;
+            border-radius: 3px;
+        }
+
         /* ── Print Styles ── */
         @media print {
             body { background: white; font-size: 11pt; }
@@ -512,6 +571,7 @@
                 padding: 1.5rem 1rem;
             }
             .container { padding: 1rem 0; }
+            .search-container { display: none; }
             .section, .rescue-section, .known-issues, .toc {
                 box-shadow: none;
                 break-inside: avoid;
@@ -536,6 +596,7 @@
             .container { padding: 1rem; }
             .section-body, .rescue-body { padding: 1.25rem; }
             .screenshot-row { flex-direction: column; align-items: center; }
+            .search-input { font-size: 16px; }
         }
     </style>
 </head>
@@ -546,6 +607,14 @@
     <h1>Proctoring the IAR</h1>
     <div class="subtitle">Oak Grove School District 68 &mdash; Spring 2026</div>
     <div class="updated">Last updated: April 1, 2026</div>
+</div>
+
+<div class="search-container">
+    <div class="search-wrapper">
+        <span class="search-icon">&#128269;</span>
+        <input type="text" class="search-input" id="search-input" placeholder="Search this guide (try &quot;kicked out&quot;, &quot;resume test&quot;, &quot;seal code&quot;, &quot;frozen&quot;)">
+        <div class="search-results-info" id="search-results-info"></div>
+    </div>
 </div>
 
 <div class="container">
@@ -583,6 +652,24 @@
                 <div class="issue-title">Allow Camera &amp; Microphone Access When Prompted</div>
                 <div class="issue-date">Posted April 1, 2026</div>
                 <p>Students may see a prompt asking to allow access to the <strong>camera and microphone</strong>. They must click <strong>Allow</strong>. Only the microphone is used during the assessment &mdash; the camera is not &mdash; but the prompt may mention both. If a student denies access, TestNav may not allow the test to proceed, and fixing it requires going into the device's settings, which significantly delays testing.</p>
+            </div>
+
+            <div class="issue-item">
+                <div class="issue-title">Get Device &amp; Headphone Issues Sorted Before Testing</div>
+                <div class="issue-date">Posted April 1, 2026</div>
+                <p>If you or a student are missing a device or headphones, <strong>resolve this first thing in the morning</strong> &mdash; do not wait until testing is about to start. The tech office is open for walk-ins from <strong>8:00 to 8:35 AM</strong> on testing days for loaner devices and headphone pickups. Send students who need headphones or a loaner device during this window. If you need extra headphones for your class, <strong>email <a href="mailto:ogstechsupport@ogschool.org" style="color:var(--amber-border);">ogstechsupport@ogschool.org</a> ahead of time</strong> so they can be ready for you.</p>
+            </div>
+
+            <div class="issue-item">
+                <div class="issue-title">Tech Support During Testing &mdash; Email Only</div>
+                <div class="issue-date">Posted April 1, 2026</div>
+                <p>Once testing begins (after 8:35 AM), the tech team will be moving throughout the building assisting classrooms. If you need tech help, <strong>email <a href="mailto:ogstechsupport@ogschool.org" style="color:var(--amber-border);">ogstechsupport@ogschool.org</a></strong> with a brief description of the issue, your room number, and the student's name. <strong>Do not send students to the tech office</strong> &mdash; no one will be there. Do not text.</p>
+            </div>
+
+            <div class="issue-item">
+                <div class="issue-title">Charge Devices &amp; Check Headphones the Night Before</div>
+                <div class="issue-date">Posted April 1, 2026</div>
+                <p>Remind students to <strong>charge their devices fully</strong> the night before each testing day and to bring their <strong>headphones</strong> (required for ELA). Please ask students to verify devices and headphones are working <strong>prior to testing</strong> (before 8:35 AM). A dead battery or missing headphones mid-test delays the entire class.</p>
             </div>
 
         </div>
@@ -628,6 +715,8 @@
                         <li style="padding:0.15rem 0 0.15rem 1rem; color:var(--gray);">&mdash; Seal Codes (one per section)</li>
                     </ul>
                 </li>
+                <li><strong>Headphones</strong> (ELA testing only) &mdash; extras available from the tech office. Email <a href="mailto:ogstechsupport@ogschool.org" style="color:var(--blue);">ogstechsupport@ogschool.org</a> ahead of time if you need additional headphones for your class.</li>
+                <li><strong>Pencils</strong> and <strong>scratch paper</strong></li>
             </ul>
             <div class="screenshot has-image">
                 <img src="images/proctor-card-example.jpg" alt="Example proctor card showing Test Code, Proctor Password, and Seal Codes" style="max-width:320px;">
@@ -729,6 +818,16 @@
                         <img src="images/proctor-dashboard-actions.png" alt="Proctor dashboard Actions panel showing Test Code, Proctor Password, Seal Codes, and Display button" style="max-width:70%;">
                     </div>
                 </div>
+            </div>
+
+            <div class="callout callout-warning" style="margin-top:1.5rem;">
+                <strong style="font-size:1.1rem;">&#128274; Do Not Share Proctor Credentials</strong>
+                <p style="margin-top:0.5rem;">Each proctor must access the testing platform using their own individual account. Sharing login credentials violates the Pearson security agreement and creates a security risk.</p>
+                <ul style="list-style:none; margin:0.75rem 0 0;">
+                    <li style="padding:0.4rem 0; color:var(--gray);"><strong style="color:var(--red-border);">Floaters / brief relief:</strong> If you are temporarily covering for another proctor (e.g., for a break), the proctoring session stays logged in &mdash; <strong>do not log out</strong>. The proctor card should remain under the proctor's computer in case the session needs to be recovered.</li>
+                    <li style="padding:0.4rem 0; color:var(--gray);"><strong style="color:var(--red-border);">All-day substitute proctors:</strong> If you are subbing for a proctor for the entire day, you will receive your own test code, proctor password, and proctor card. Contact Lori or Dave Huber to obtain your credentials before test day.</li>
+                </ul>
+                <p style="margin-top:0.75rem;"><strong>Student privacy reminder:</strong> When contacting Pearson Support or ISBE about a student issue, provide only the <strong>9-digit Student State ID</strong>. Do not include student names, gender, or other personally identifiable information.</p>
             </div>
         </div>
     </div>
@@ -920,6 +1019,20 @@
             <div class="callout callout-warning">
                 <strong>Reminder:</strong> Do not provide Seal Codes to students unless your <em>entire class</em> is ready to move to the next section. Each test has its own proctor card &mdash; make sure you're using the correct card for the test you're administering.
             </div>
+
+            <!-- Calculators -->
+            <h3 style="color:var(--blue-dark); margin:1.75rem 0 0.5rem; font-size:1.05rem;">&#128290; Calculators (Math Only)</h3>
+            <p style="margin-bottom:0.75rem; color:var(--gray);">Calculators are <strong>built into TestNav</strong> &mdash; students do not need a physical calculator. The type available depends on the grade:</p>
+            <table class="seal-table">
+                <thead>
+                    <tr><th>Grade(s)</th><th>Calculator Type</th><th>Sections</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td>3&ndash;5</td><td>Accommodation only (4-function w/sq. root &amp; percentage)</td><td>1, 2, 3</td></tr>
+                    <tr><td>6&ndash;7</td><td>4-function w/sq. root &amp; percentage</td><td>1, 2, 3</td></tr>
+                    <tr><td>8</td><td>Scientific</td><td>2 &amp; 3</td></tr>
+                </tbody>
+            </table>
         </div>
     </div>
 
@@ -993,15 +1106,30 @@
             <div class="step">
                 <span class="step-number">5</span>
                 <div class="step-content">
-                    <p><strong>Now tell the student to log back into TestNav.</strong> Their test will resume where they left off.</p>
+                    <p><strong>Now tell the student to log back into TestNav.</strong> After logging back in, the student must click <strong>Refresh</strong> in TestNav. Their test will resume where they left off.</p>
                     <div class="callout callout-info">
-                        <strong>What the student sees:</strong> If a "Session in Use" message appears, the student should click <strong>Retry</strong>. Their test will resume exactly where they left off &mdash; no work is lost.
+                        <strong>What the student sees:</strong> If a "Session in Use" message appears, the student should click <strong>Retry</strong>, then <strong>Refresh</strong>. Their test will resume exactly where they left off &mdash; no work is lost.
+                    </div>
+                </div>
+            </div>
+
+            <div class="step">
+                <span class="step-number">6</span>
+                <div class="step-content">
+                    <p><strong>Last resort: Hard shutdown.</strong> If the student's screen is completely frozen or locked and nothing responds, <strong>press and hold the power button</strong> until the device shuts off completely. Student answers are <strong>automatically saved</strong> &mdash; no work will be lost. After the device restarts, follow steps 1&ndash;5 above to reseat the student and get them back into the test.</p>
+                    <div class="callout callout-warning">
+                        <strong>This is a last resort.</strong> Try the normal reseating steps first. Only force a shutdown if the device is truly unresponsive.
                     </div>
                 </div>
             </div>
 
             <div class="callout callout-tip">
                 <strong>Tip:</strong> Keep the Refresh button handy throughout testing. The dashboard does not update in real time, and catching an "Exited" status early means less lost testing time.
+            </div>
+
+            <div class="callout callout-warning" style="margin-top:1rem;">
+                <strong style="font-size:1.1rem;">&#128231; Need More Help? Email Tech Support</strong>
+                <p style="margin-top:0.35rem;">If the issue can't be resolved with the steps above, email <strong><a href="mailto:ogstechsupport@ogschool.org" style="color:var(--red-border);">ogstechsupport@ogschool.org</a></strong> with a brief description of the problem, your room number, and the student's name. <strong>Do not send students to the tech office</strong> &mdash; tech staff are circulating throughout the building during testing. Do not text.</p>
             </div>
         </div>
     </div>
@@ -1013,7 +1141,8 @@
     <!-- ════════════════════ FOOTER ════════════════════ -->
     <div class="footer">
         <p>Oak Grove School District 68 &mdash; Technology Department</p>
-        <p style="margin-top:0.25rem;">Questions? Contact <a href="mailto:huber@ogschool.org">huber@ogschool.org</a></p>
+        <p style="margin-top:0.25rem;">Tech support on test days: <a href="mailto:ogstechsupport@ogschool.org">ogstechsupport@ogschool.org</a></p>
+        <p style="margin-top:0.25rem;">Questions about this guide? <a href="mailto:huber@ogschool.org">huber@ogschool.org</a></p>
     </div>
 
 </div>
@@ -1042,6 +1171,167 @@
         body.classList.toggle('hidden');
         header.classList.toggle('collapsed');
     }
+
+    // ── Search ──
+    (function() {
+        var searchInput = document.getElementById('search-input');
+        var searchInfo = document.getElementById('search-results-info');
+        var searchTimeout;
+
+        var synonymMap = {
+            'kicked out': ['exited', 'reseat', 'crash', 'goes wrong'],
+            'resume test': ['reseat', 'log back', 'resume', 'back in'],
+            'resume': ['reseat', 'log back', 'resume', 'back in'],
+            'frozen': ['locked', 'crash', 'hard shutdown', 'power button', 'unresponsive'],
+            'stuck': ['frozen', 'locked', 'crash', 'exited', 'unresponsive'],
+            'password': ['proctor password', 'test code', 'credential', 'login'],
+            'login': ['proctor password', 'test code', 'credential', 'log in'],
+            'lock': ['kiosk', 'self-lock', 'locked', 'frozen'],
+            'headphone': ['headphone', 'audio', 'microphone'],
+            'audio': ['headphone', 'microphone', 'audio'],
+            'substitute': ['substitute', 'floater', 'relief', 'sub ', 'credential'],
+            'sub ': ['substitute', 'floater', 'relief', 'credential'],
+            'help': ['tech support', 'ogstechsupport', 'contact', 'email'],
+            'error': ['crash', 'exited', 'goes wrong', 'reseat', 'frozen'],
+            'crash': ['exited', 'reseat', 'frozen', 'hard shutdown', 'power button'],
+            'seal': ['seal code'],
+            'start': ['launch', 'testnav', 'test code', 'login'],
+        };
+
+        searchInput.addEventListener('input', function() {
+            clearTimeout(searchTimeout);
+            searchTimeout = setTimeout(function() {
+                performSearch(searchInput.value.trim());
+            }, 300);
+        });
+
+        searchInput.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                searchInput.value = '';
+                performSearch('');
+                searchInput.blur();
+            }
+        });
+
+        function expandAll() {
+            var kiHeader = document.querySelector('.known-issues-header');
+            var kiBody = document.getElementById('known-issues-body');
+            kiHeader.classList.remove('collapsed');
+            kiBody.classList.remove('hidden');
+            document.querySelectorAll('.section-header').forEach(function(h) {
+                h.classList.remove('collapsed');
+                h.nextElementSibling.classList.remove('hidden');
+            });
+        }
+
+        function collapseAll() {
+            var kiHeader = document.querySelector('.known-issues-header');
+            var kiBody = document.getElementById('known-issues-body');
+            kiHeader.classList.add('collapsed');
+            kiBody.classList.add('hidden');
+            document.querySelectorAll('.section-header').forEach(function(h) {
+                h.classList.add('collapsed');
+                h.nextElementSibling.classList.add('hidden');
+            });
+        }
+
+        function clearHighlights() {
+            document.querySelectorAll('mark.search-highlight').forEach(function(mark) {
+                var parent = mark.parentNode;
+                parent.replaceChild(document.createTextNode(mark.textContent), mark);
+                parent.normalize();
+            });
+        }
+
+        function highlightText(root, terms) {
+            var count = 0;
+            var walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, null, false);
+            var textNodes = [];
+            while (walker.nextNode()) textNodes.push(walker.currentNode);
+
+            textNodes.forEach(function(tn) {
+                var tag = tn.parentNode.tagName;
+                if (tag === 'SCRIPT' || tag === 'STYLE' || tag === 'MARK' || tag === 'INPUT') return;
+
+                var text = tn.textContent;
+                var lower = text.toLowerCase();
+                var positions = [];
+
+                terms.forEach(function(term) {
+                    var idx = lower.indexOf(term);
+                    while (idx !== -1) {
+                        positions.push({ start: idx, end: idx + term.length });
+                        idx = lower.indexOf(term, idx + 1);
+                    }
+                });
+
+                if (positions.length === 0) return;
+
+                positions.sort(function(a, b) { return a.start - b.start; });
+                var merged = [{ start: positions[0].start, end: positions[0].end }];
+                for (var i = 1; i < positions.length; i++) {
+                    var last = merged[merged.length - 1];
+                    if (positions[i].start <= last.end) {
+                        last.end = Math.max(last.end, positions[i].end);
+                    } else {
+                        merged.push({ start: positions[i].start, end: positions[i].end });
+                    }
+                }
+
+                var frag = document.createDocumentFragment();
+                var lastEnd = 0;
+                merged.forEach(function(pos) {
+                    if (pos.start > lastEnd) frag.appendChild(document.createTextNode(text.substring(lastEnd, pos.start)));
+                    var mark = document.createElement('mark');
+                    mark.className = 'search-highlight';
+                    mark.textContent = text.substring(pos.start, pos.end);
+                    frag.appendChild(mark);
+                    lastEnd = pos.end;
+                    count++;
+                });
+                if (lastEnd < text.length) frag.appendChild(document.createTextNode(text.substring(lastEnd)));
+
+                tn.parentNode.replaceChild(frag, tn);
+            });
+
+            return count;
+        }
+
+        function performSearch(query) {
+            clearHighlights();
+
+            if (!query || query.length < 2) {
+                collapseAll();
+                searchInfo.style.display = 'none';
+                return;
+            }
+
+            expandAll();
+
+            var terms = [query.toLowerCase()];
+            var lowerQuery = query.toLowerCase();
+            Object.keys(synonymMap).forEach(function(key) {
+                if (lowerQuery.includes(key)) {
+                    synonymMap[key].forEach(function(syn) {
+                        if (terms.indexOf(syn.toLowerCase()) === -1) terms.push(syn.toLowerCase());
+                    });
+                }
+            });
+
+            var container = document.querySelector('.container');
+            var count = highlightText(container, terms);
+
+            if (count > 0) {
+                searchInfo.textContent = count + ' match' + (count !== 1 ? 'es' : '') + ' found';
+                searchInfo.style.display = 'block';
+                var first = document.querySelector('mark.search-highlight');
+                if (first) first.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            } else {
+                searchInfo.textContent = 'No matches found';
+                searchInfo.style.display = 'block';
+            }
+        }
+    })();
 </script>
 
 </body>
