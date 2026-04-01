@@ -1,0 +1,980 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Proctoring the IAR &amp; ISA — Oak Grove SD 68</title>
+    <style>
+        :root {
+            --blue: #1a5bbf;
+            --blue-dark: #0f3d80;
+            --blue-light: #e8f0fe;
+            --blue-muted: #d0dff5;
+            --red-bg: #fef2f2;
+            --red-border: #dc2626;
+            --amber-bg: #fffbeb;
+            --amber-border: #d97706;
+            --green-bg: #f0fdf4;
+            --green-border: #16a34a;
+            --charcoal: #1a1a1a;
+            --gray: #444;
+            --gray-light: #666;
+            --gray-muted: #999;
+            --cream: #f8f9fc;
+            --white: #ffffff;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            color: var(--charcoal);
+            line-height: 1.7;
+            background: var(--cream);
+        }
+
+        /* ── Header ── */
+        .header {
+            background: linear-gradient(135deg, var(--blue-dark) 0%, var(--blue) 100%);
+            color: var(--white);
+            padding: 3.5rem 2rem 2.5rem;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            margin-bottom: 0.3rem;
+        }
+
+        .header .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.85;
+            font-weight: 400;
+        }
+
+        .header .updated {
+            margin-top: 0.75rem;
+            font-size: 0.85rem;
+            opacity: 0.6;
+        }
+
+        /* ── Container ── */
+        .container {
+            max-width: 1060px;
+            margin: 0 auto;
+            padding: 2.5rem 2rem 4rem;
+        }
+
+        /* ── Known Issues Banner ── */
+        .known-issues {
+            background: var(--white);
+            border: 2px solid var(--amber-border);
+            border-radius: 10px;
+            margin-bottom: 2.5rem;
+            overflow: hidden;
+        }
+
+        .known-issues-header {
+            background: var(--amber-bg);
+            padding: 0.85rem 1.25rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            user-select: none;
+        }
+
+        .known-issues-header h2 {
+            font-size: 1.1rem;
+            color: var(--amber-border);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .known-issues-header .toggle-icon {
+            font-size: 1.2rem;
+            color: var(--amber-border);
+            transition: transform 0.2s;
+        }
+
+        .known-issues-header.collapsed .toggle-icon {
+            transform: rotate(-90deg);
+        }
+
+        .known-issues-body {
+            padding: 1rem 1.25rem 1.25rem;
+            border-top: 1px solid #f0e0b0;
+        }
+
+        .known-issues-body.hidden {
+            display: none;
+        }
+
+        .issue-item {
+            padding: 0.75rem 0;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .issue-item:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .issue-item .issue-title {
+            font-weight: 600;
+            color: var(--charcoal);
+            margin-bottom: 0.25rem;
+        }
+
+        .issue-item .issue-date {
+            font-size: 0.8rem;
+            color: var(--gray-muted);
+            margin-bottom: 0.35rem;
+        }
+
+        .issue-item p {
+            font-size: 0.95rem;
+            color: var(--gray);
+        }
+
+        /* ── Sections ── */
+        .section {
+            background: var(--white);
+            border-radius: 10px;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+            margin-bottom: 2rem;
+            overflow: hidden;
+        }
+
+        .section-header {
+            background: var(--blue-light);
+            padding: 1rem 1.5rem;
+            border-bottom: 3px solid var(--blue);
+        }
+
+        .section-header h2 {
+            font-size: 1.3rem;
+            color: var(--blue-dark);
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+        }
+
+        .section-number {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            background: var(--blue);
+            color: var(--white);
+            font-size: 0.95rem;
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+
+        .section-body {
+            padding: 1.75rem 2rem;
+        }
+
+        /* ── Steps ── */
+        .step {
+            display: flex;
+            gap: 1.25rem;
+            padding: 1.25rem 0;
+            border-bottom: 1px solid #f0f0f0;
+            align-items: flex-start;
+        }
+
+        .step:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .step-number {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background: var(--blue-muted);
+            color: var(--blue-dark);
+            font-size: 0.85rem;
+            font-weight: 700;
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+
+        .step-content {
+            flex: 1;
+        }
+
+        .step-content p {
+            margin-bottom: 0.5rem;
+            color: var(--gray);
+        }
+
+        .step-content p:last-child {
+            margin-bottom: 0;
+        }
+
+        .step-content strong {
+            color: var(--charcoal);
+        }
+
+        /* ── Screenshot containers ── */
+        .screenshot {
+            background: var(--cream);
+            border: 2px dashed var(--blue-muted);
+            border-radius: 8px;
+            padding: 1.5rem;
+            text-align: center;
+            color: var(--gray-muted);
+            font-size: 0.85rem;
+            margin-top: 0.75rem;
+        }
+
+        .screenshot.has-image {
+            border-style: solid;
+            border-color: #e0e0e0;
+            background: var(--white);
+        }
+
+        .screenshot img {
+            max-width: 100%;
+            border-radius: 6px;
+            display: block;
+            margin: 0 auto;
+        }
+
+        .screenshot-row {
+            display: flex;
+            gap: 1.5rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            align-items: flex-start;
+            background: var(--cream);
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-top: 0.75rem;
+        }
+
+        .screenshot-row.has-image {
+            background: var(--white);
+        }
+
+        .screenshot-row img {
+            border-radius: 6px;
+            display: block;
+        }
+
+        /* ── Callout boxes ── */
+        .callout {
+            border-radius: 8px;
+            padding: 1rem 1.25rem;
+            margin: 1rem 0;
+            font-size: 0.95rem;
+        }
+
+        .callout-warning {
+            background: var(--red-bg);
+            border-left: 4px solid var(--red-border);
+        }
+
+        .callout-warning strong {
+            color: var(--red-border);
+        }
+
+        .callout-info {
+            background: var(--blue-light);
+            border-left: 4px solid var(--blue);
+        }
+
+        .callout-info strong {
+            color: var(--blue-dark);
+        }
+
+        .callout-tip {
+            background: var(--green-bg);
+            border-left: 4px solid var(--green-border);
+        }
+
+        .callout-tip strong {
+            color: var(--green-border);
+        }
+
+        /* ── Checklist ── */
+        .checklist {
+            list-style: none;
+            padding: 0;
+        }
+
+        .checklist li {
+            padding: 0.5rem 0 0.5rem 2rem;
+            position: relative;
+            color: var(--gray);
+        }
+
+        .checklist li::before {
+            content: "\2610";
+            position: absolute;
+            left: 0.25rem;
+            font-size: 1.1rem;
+            color: var(--blue);
+        }
+
+        .checklist li strong {
+            color: var(--charcoal);
+        }
+
+        /* ── Seal Code Table ── */
+        .seal-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+            font-size: 0.95rem;
+        }
+
+        .seal-table th {
+            background: var(--blue-dark);
+            color: var(--white);
+            padding: 0.6rem 1rem;
+            text-align: left;
+            font-weight: 600;
+        }
+
+        .seal-table td {
+            padding: 0.6rem 1rem;
+            border-bottom: 1px solid #eee;
+        }
+
+        .seal-table tr:nth-child(even) td {
+            background: var(--cream);
+        }
+
+        /* ── Status Reference ── */
+        .status-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 0.75rem;
+            margin: 1rem 0;
+        }
+
+        .status-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.9rem;
+            color: var(--gray);
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 0.15rem 0.6rem;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            white-space: nowrap;
+        }
+
+        .badge-not-started { background: #e5e7eb; color: #374151; }
+        .badge-needs-attention { background: #fee2e2; color: #991b1b; }
+        .badge-in-progress { background: #dbeafe; color: #1e40af; }
+        .badge-exited { background: #fef3c7; color: #92400e; }
+        .badge-paused { background: #f3e8ff; color: #6b21a8; }
+        .badge-reseat { background: #ffedd5; color: #9a3412; }
+        .badge-submitted { background: #d1fae5; color: #065f46; }
+
+        /* ── Rescue Section ── */
+        .rescue-section {
+            background: var(--white);
+            border-radius: 10px;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+            margin-bottom: 2rem;
+            overflow: hidden;
+            border: 2px solid var(--red-border);
+        }
+
+        .rescue-header {
+            background: var(--red-bg);
+            padding: 1rem 1.5rem;
+            border-bottom: 3px solid var(--red-border);
+        }
+
+        .rescue-header h2 {
+            font-size: 1.3rem;
+            color: var(--red-border);
+        }
+
+        .rescue-body {
+            padding: 1.75rem 2rem;
+        }
+
+        /* ── Footer ── */
+        .footer {
+            text-align: center;
+            padding: 2rem 1rem;
+            color: var(--gray-muted);
+            font-size: 0.8rem;
+        }
+
+        .footer a {
+            color: var(--blue);
+            text-decoration: none;
+        }
+
+        /* ── Table of Contents ── */
+        .toc {
+            background: var(--white);
+            border-radius: 10px;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+            margin-bottom: 2rem;
+            padding: 1.5rem 2rem;
+        }
+
+        .toc h3 {
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--gray-muted);
+            margin-bottom: 0.75rem;
+        }
+
+        .toc-list {
+            list-style: none;
+            padding: 0;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.4rem 2rem;
+        }
+
+        .toc-list a {
+            color: var(--blue);
+            text-decoration: none;
+            font-size: 0.95rem;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        .toc-list a:hover {
+            text-decoration: underline;
+        }
+
+        .toc-list .toc-number {
+            color: var(--gray-muted);
+            font-size: 0.85rem;
+            min-width: 1.5rem;
+        }
+
+        /* ── Print Styles ── */
+        @media print {
+            body { background: white; font-size: 11pt; }
+            .header {
+                background: var(--blue-dark) !important;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+                padding: 1.5rem 1rem;
+            }
+            .container { padding: 1rem 0; }
+            .section, .rescue-section, .known-issues, .toc {
+                box-shadow: none;
+                break-inside: avoid;
+                margin-bottom: 1rem;
+            }
+            .section-header, .rescue-header, .known-issues-header,
+            .seal-table th {
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+            .known-issues-body.hidden { display: block !important; }
+            .toggle-icon { display: none; }
+            .footer { padding: 1rem; }
+        }
+
+        /* ── Responsive ── */
+        @media (max-width: 700px) {
+            .header h1 { font-size: 1.6rem; }
+            .header { padding: 2rem 1rem 1.5rem; }
+            .toc-list { grid-template-columns: 1fr; }
+            .status-grid { grid-template-columns: 1fr; }
+            .container { padding: 1rem; }
+            .section-body, .rescue-body { padding: 1.25rem; }
+            .screenshot-row { flex-direction: column; align-items: center; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- ════════════════════════════════════════════ HEADER ════════════════════════════════════════════ -->
+<div class="header">
+    <h1>Proctoring the IAR &amp; ISA</h1>
+    <div class="subtitle">Oak Grove School District 68 &mdash; Spring 2026</div>
+    <div class="updated">Last updated: March 31, 2026</div>
+</div>
+
+<div class="container">
+
+    <!-- ════════════════════ KNOWN ISSUES ════════════════════ -->
+    <div class="known-issues" id="known-issues">
+        <div class="known-issues-header" onclick="toggleKnownIssues()">
+            <h2>&#9888; Known Issues &amp; Reminders</h2>
+            <span class="toggle-icon">&#9660;</span>
+        </div>
+        <div class="known-issues-body" id="known-issues-body">
+
+            <div class="issue-item">
+                <div class="issue-title">Restart Devices the Morning of the Test</div>
+                <div class="issue-date">Posted March 31, 2026</div>
+                <p>Both testing devices <strong>and</strong> proctor devices must be restarted the morning of each test session. Not sleep, not close-the-lid &mdash; a full restart. This clears background processes that can interfere with TestNav's kiosk mode and prevents the majority of mid-test crashes.</p>
+            </div>
+
+            <div class="issue-item">
+                <div class="issue-title">MacBook Users: Launch TestNav from the Applications Folder</div>
+                <div class="issue-date">Posted March 31, 2026</div>
+                <p>Students on MacBooks must open the <strong>TestNav app</strong> from the Applications folder (Finder &rarr; Applications &rarr; TestNav). Do <strong>not</strong> let students search for "TestNav" in a browser. If the app is missing from a device, Google will take them to the TestNav website, which looks legitimate and will let them sign in &mdash; but it is <strong>not</strong> the correct testing environment and their session will not count. If any device is missing the TestNav application, contact the tech team immediately rather than using the website.</p>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- ════════════════════ TABLE OF CONTENTS ════════════════════ -->
+    <div class="toc">
+        <h3>Quick Navigation</h3>
+        <ul class="toc-list">
+            <li><span class="toc-number">1.</span><a href="#what-you-need">What You'll Need</a></li>
+            <li><span class="toc-number">2.</span><a href="#before-test-day">Before Test Day</a></li>
+            <li><span class="toc-number">3.</span><a href="#proctor-setup">Proctor Setup</a></li>
+            <li><span class="toc-number">4.</span><a href="#student-login">Student Login</a></li>
+            <li><span class="toc-number">5.</span><a href="#running-the-test">Running the Test</a></li>
+            <li><span class="toc-number">6.</span><a href="#wrapping-up">Wrapping Up</a></li>
+            <li><span class="toc-number">7.</span><a href="#seal-codes">Seal Code Reference</a></li>
+            <li><span class="toc-number">8.</span><a href="#status-reference">Status Icons</a></li>
+            <li><span class="toc-number" style="color:var(--red-border);">&bull;</span><a href="#something-goes-wrong" style="color:var(--red-border);">If Something Goes Wrong</a></li>
+        </ul>
+    </div>
+
+    <!-- ════════════════════ 1. WHAT YOU'LL NEED ════════════════════ -->
+    <div class="section" id="what-you-need">
+        <div class="section-header">
+            <h2><span class="section-number">1</span> What You'll Need</h2>
+        </div>
+        <div class="section-body">
+            <ul class="checklist">
+                <li><strong>A computer to proctor with</strong> (separate from student devices)</li>
+                <li><strong>The written scripts</strong> to be read aloud to students</li>
+                <li><strong>Student testing tickets</strong>, each containing:
+                    <ul style="list-style:none; margin-top:0.35rem;">
+                        <li style="padding:0.15rem 0 0.15rem 1rem; color:var(--gray);">&mdash; Student name</li>
+                        <li style="padding:0.15rem 0 0.15rem 1rem; color:var(--gray);">&mdash; Last name (entered at testing)</li>
+                        <li style="padding:0.15rem 0 0.15rem 1rem; color:var(--gray);">&mdash; State student number (the identifier)</li>
+                    </ul>
+                </li>
+                <li><strong>Your proctor card</strong>, which includes:
+                    <ul style="list-style:none; margin-top:0.35rem;">
+                        <li style="padding:0.15rem 0 0.15rem 1rem; color:var(--gray);">&mdash; Test Code</li>
+                        <li style="padding:0.15rem 0 0.15rem 1rem; color:var(--gray);">&mdash; Proctor Password</li>
+                        <li style="padding:0.15rem 0 0.15rem 1rem; color:var(--gray);">&mdash; Seal Codes (one per section)</li>
+                    </ul>
+                </li>
+            </ul>
+            <div class="screenshot has-image">
+                <img src="images/proctor-card-example.jpg" alt="Example proctor card showing Test Code, Proctor Password, and Seal Codes" style="max-width:520px;">
+            </div>
+        </div>
+    </div>
+
+    <!-- ════════════════════ 2. BEFORE TEST DAY ════════════════════ -->
+    <div class="section" id="before-test-day">
+        <div class="section-header">
+            <h2><span class="section-number">2</span> Before Test Day</h2>
+        </div>
+        <div class="section-body">
+            <div class="callout callout-tip">
+                <strong>Strongly recommended:</strong> Have students launch TestNav before test day to complete these checks. Resolving issues during the test delays the entire class.
+            </div>
+
+            <div class="step">
+                <span class="step-number">1</span>
+                <div class="step-content">
+                    <p><strong>Restart the device.</strong> A full restart, not just sleep or closing the lid.</p>
+                </div>
+            </div>
+
+            <div class="step">
+                <span class="step-number">2</span>
+                <div class="step-content">
+                    <p><strong>Open the TestNav application</strong> from the Applications folder. Do not search for TestNav in a browser.</p>
+                </div>
+            </div>
+
+            <div class="step">
+                <span class="step-number">3</span>
+                <div class="step-content">
+                    <p><strong>Select the correct customer.</strong> Click the icon in the top-right corner, choose <strong>"Choose a different customer,"</strong> then select <strong>Illinois</strong>.</p>
+                    <div class="screenshot">
+                        <!-- NEED: Screenshot of "Choose a different customer" dropdown and Illinois selection -->
+                        [Screenshot needed: "Choose a different customer" menu with Illinois selected]
+                    </div>
+                </div>
+            </div>
+
+            <div class="step">
+                <span class="step-number">4</span>
+                <div class="step-content">
+                    <p><strong>Test audio and microphone.</strong> Students should allow microphone access when prompted.</p>
+                    <div class="callout callout-warning">
+                        <strong>Important:</strong> If a student denies microphone access, TestNav will likely not allow the test to proceed. The only fix is to go into the device's Security &amp; Privacy settings, which significantly delays testing.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ════════════════════ 3. PROCTOR SETUP ════════════════════ -->
+    <div class="section" id="proctor-setup">
+        <div class="section-header">
+            <h2><span class="section-number">3</span> Proctor Setup</h2>
+        </div>
+        <div class="section-body">
+            <div class="step">
+                <span class="step-number">1</span>
+                <div class="step-content">
+                    <p>Go to <strong>il.adamexam.com/#/proctor</strong> on your proctor computer.</p>
+                </div>
+            </div>
+
+            <div class="step">
+                <span class="step-number">2</span>
+                <div class="step-content">
+                    <p>Enter the <strong>Test Code</strong> and <strong>Proctor Password</strong> from your proctor card. Click <strong>Submit</strong>, then <strong>Confirm</strong>.</p>
+                    <div class="screenshot">
+                        <!-- NEED: Screenshot of proctor login screen at il.adamexam.com -->
+                        [Screenshot needed: Proctor login screen with Test Code and Proctor Password fields]
+                    </div>
+                </div>
+            </div>
+
+            <div class="step">
+                <span class="step-number">3</span>
+                <div class="step-content">
+                    <p>Enter your <strong>first and last name</strong>, check the <strong>"I Agree"</strong> box on the Proctor Acknowledgment, and click <strong>Save</strong>.</p>
+                    <div class="screenshot">
+                        <!-- NEED: Screenshot of proctor acknowledgment form -->
+                        [Screenshot needed: Proctor name entry and acknowledgment form]
+                    </div>
+                </div>
+            </div>
+
+            <div class="step">
+                <span class="step-number">4</span>
+                <div class="step-content">
+                    <p>You're now in the proctoring platform. <strong>Display the Test Code</strong> for students &mdash; write it on the board or use the <strong>Display</strong> button in the top-right corner to project it.</p>
+                    <div class="screenshot">
+                        <!-- NEED: Screenshot of proctor dashboard Actions panel -->
+                        [Screenshot needed: Proctor dashboard showing Test Code, Seal Codes, and Display button]
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ════════════════════ 4. STUDENT LOGIN ════════════════════ -->
+    <div class="section" id="student-login">
+        <div class="section-header">
+            <h2><span class="section-number">4</span> Student Login</h2>
+        </div>
+        <div class="section-body">
+            <div class="step">
+                <span class="step-number">1</span>
+                <div class="step-content">
+                    <p>Students <strong>restart their devices</strong>, then open the <strong>TestNav app</strong> from the Applications folder.</p>
+                </div>
+            </div>
+
+            <div class="step">
+                <span class="step-number">2</span>
+                <div class="step-content">
+                    <p>Students enter the <strong>Test Code</strong> displayed on the board.</p>
+                </div>
+            </div>
+
+            <div class="step">
+                <span class="step-number">3</span>
+                <div class="step-content">
+                    <p>Students enter their <strong>last name</strong> and <strong>state identifier</strong> from their testing ticket, then click <strong>Confirm</strong>.</p>
+                    <div class="screenshot">
+                        <!-- NEED: Screenshot(s) of student login flow in TestNav -->
+                        [Screenshot needed: Student login flow — Test Code entry, name/ID entry, Confirm screen]
+                    </div>
+                </div>
+            </div>
+
+            <div class="step">
+                <span class="step-number">4</span>
+                <div class="step-content">
+                    <p>On your proctor dashboard, <strong>press Refresh</strong> (or enable Auto Refresh) until all students appear with a <strong>"Needs Attention"</strong> status. The page does not update in real time.</p>
+                    <div class="callout callout-info">
+                        <strong>Note:</strong> Auto Refresh only updates every 5 minutes. Use the manual Refresh button if you need a faster update.
+                    </div>
+                    <div class="screenshot">
+                        <!-- NEED: Screenshot of proctor dashboard with students showing Needs Attention -->
+                        [Screenshot needed: Proctor dashboard with "Needs Attention" statuses and Refresh button]
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ════════════════════ 5. RUNNING THE TEST ════════════════════ -->
+    <div class="section" id="running-the-test">
+        <div class="section-header">
+            <h2><span class="section-number">5</span> Running the Test</h2>
+        </div>
+        <div class="section-body">
+            <div class="step">
+                <span class="step-number">1</span>
+                <div class="step-content">
+                    <p>Once all students appear in the list, go to <strong>Group Actions</strong> and click <strong>"Approve All Sessions"</strong>, then confirm.</p>
+                    <div class="screenshot">
+                        <!-- NEED: Screenshot of Approve All Sessions button + confirmation -->
+                        [Screenshot needed: Group Actions — Approve All Sessions button and confirmation dialog]
+                    </div>
+                </div>
+            </div>
+
+            <div class="step">
+                <span class="step-number">2</span>
+                <div class="step-content">
+                    <p>Student devices will prompt for <strong>App Self-Lock</strong> (kiosk mode). Students must tap <strong>"Yes"</strong> to proceed.</p>
+                    <div class="screenshot">
+                        <!-- NEED: Screenshot of Confirm App Self-Lock dialog -->
+                        [Screenshot needed: "Confirm App Self-Lock" dialog on student device]
+                    </div>
+                </div>
+            </div>
+
+            <div class="step">
+                <span class="step-number">3</span>
+                <div class="step-content">
+                    <p><strong>Provide the Seal Code</strong> for the current section. Display it on the board or read it aloud.</p>
+                    <div class="callout callout-warning">
+                        <strong>Do not give out Seal Codes early.</strong> Only provide a Seal Code when your <em>entire class</em> is ready to move to that section.
+                    </div>
+                </div>
+            </div>
+
+            <div class="step">
+                <span class="step-number">4</span>
+                <div class="step-content">
+                    <p><strong>Monitor progress</strong> using the Refresh button. You can track Section Progress, Item Progress, and Test Duration for each student.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ════════════════════ 6. WRAPPING UP ════════════════════ -->
+    <div class="section" id="wrapping-up">
+        <div class="section-header">
+            <h2><span class="section-number">6</span> Wrapping Up</h2>
+        </div>
+        <div class="section-body">
+            <div class="step">
+                <span class="step-number">1</span>
+                <div class="step-content">
+                    <p>When all students have <strong>submitted</strong> their section, go to <strong>Group Actions</strong> and click <strong>"Exit All Sessions."</strong></p>
+                    <div class="screenshot">
+                        <!-- NEED: Screenshot of Exit All Sessions button -->
+                        [Screenshot needed: Group Actions — Exit All Sessions]
+                    </div>
+                </div>
+            </div>
+
+            <div class="step">
+                <span class="step-number">2</span>
+                <div class="step-content">
+                    <p>Students can now quit TestNav.</p>
+                </div>
+            </div>
+
+            <div class="step">
+                <span class="step-number">3</span>
+                <div class="step-content">
+                    <p><strong>Repeat this entire process</strong> for each remaining section of the IAR until the assessment is complete.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ════════════════════ 7. SEAL CODE REFERENCE ════════════════════ -->
+    <div class="section" id="seal-codes">
+        <div class="section-header">
+            <h2><span class="section-number">7</span> Seal Code Reference</h2>
+        </div>
+        <div class="section-body">
+            <p style="margin-bottom:1rem; color:var(--gray);">Each test has its own proctor card with its own Seal Codes. You will proctor <strong>three separate tests</strong> this year:</p>
+
+            <!-- ELA -->
+            <h3 style="color:var(--blue-dark); margin:1.25rem 0 0.5rem; font-size:1.05rem;">English Language Arts (Grades 3&ndash;8)</h3>
+            <table class="seal-table">
+                <thead>
+                    <tr><th>Section</th><th>Seal Code</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td>Section 1</td><td>Seal Code 1</td></tr>
+                    <tr><td>Section 2</td><td>Seal Code 2</td></tr>
+                </tbody>
+            </table>
+
+            <!-- ELA Field Test -->
+            <h3 style="color:var(--blue-dark); margin:1.25rem 0 0.5rem; font-size:1.05rem;">ELA Section 3 &mdash; Field Test (Grades 3&ndash;8)</h3>
+            <div class="callout callout-info" style="margin-top:0;">
+                <strong>Field Test:</strong> Oak Grove is a field test school this year. This is a required additional section administered as a separate test with its own proctor card.
+            </div>
+            <table class="seal-table">
+                <thead>
+                    <tr><th>Section</th><th>Seal Code</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td>Section 3</td><td>Seal Code 1</td></tr>
+                </tbody>
+            </table>
+
+            <!-- Math -->
+            <h3 style="color:var(--blue-dark); margin:1.25rem 0 0.5rem; font-size:1.05rem;">Mathematics (Grades 3&ndash;8)</h3>
+            <table class="seal-table">
+                <thead>
+                    <tr><th>Section</th><th>Seal Code</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td>Section 1</td><td>Seal Code 1</td></tr>
+                    <tr><td>Section 2</td><td>Seal Code 2</td></tr>
+                    <tr><td>Section 3</td><td>Seal Code 3</td></tr>
+                </tbody>
+            </table>
+
+            <div class="callout callout-warning">
+                <strong>Reminder:</strong> Do not provide Seal Codes to students unless your <em>entire class</em> is ready to move to the next section. Each test has its own proctor card &mdash; make sure you're using the correct card for the test you're administering.
+            </div>
+        </div>
+    </div>
+
+    <!-- ════════════════════ 8. STATUS REFERENCE ════════════════════ -->
+    <div class="section" id="status-reference">
+        <div class="section-header">
+            <h2><span class="section-number">8</span> Status Icons Quick Reference</h2>
+        </div>
+        <div class="section-body">
+            <p style="margin-bottom:1rem; color:var(--gray);">These are the statuses you'll see on the proctor dashboard:</p>
+
+            <div class="status-grid">
+                <div class="status-item"><span class="status-badge badge-not-started">Not Started</span> Waiting to begin</div>
+                <div class="status-item"><span class="status-badge badge-needs-attention">Needs Attention</span> Awaiting approval</div>
+                <div class="status-item"><span class="status-badge badge-in-progress">In Progress</span> Actively testing</div>
+                <div class="status-item"><span class="status-badge badge-exited">Exited</span> Left TestNav</div>
+                <div class="status-item"><span class="status-badge badge-paused">Paused</span> Student or proctor paused</div>
+                <div class="status-item"><span class="status-badge badge-reseat">Reseat</span> Being reseated</div>
+                <div class="status-item"><span class="status-badge badge-submitted">Submitted</span> Section complete</div>
+            </div>
+
+            <div class="screenshot">
+                <!-- NEED: Screenshot of status icon chart from proctor dashboard -->
+                [Screenshot needed: Test Progress and Test Status icon combinations]
+            </div>
+        </div>
+    </div>
+
+    <!-- ════════════════════ IF SOMETHING GOES WRONG ════════════════════ -->
+    <div class="rescue-section" id="something-goes-wrong">
+        <div class="rescue-header">
+            <h2>If Something Goes Wrong &mdash; Reseating a Student</h2>
+        </div>
+        <div class="rescue-body">
+            <p style="margin-bottom:1rem; color:var(--gray);">If a student is exited from the test for any reason &mdash; accidental exit, a crash, or a "Session in Use" message &mdash; <strong>you</strong> can get them back in. This is the most common issue during testing.</p>
+
+            <div class="step">
+                <span class="step-number">1</span>
+                <div class="step-content">
+                    <p><strong>Tell the student to stop and wait.</strong> Don't let them try to log back in yet.</p>
+                </div>
+            </div>
+
+            <div class="step">
+                <span class="step-number">2</span>
+                <div class="step-content">
+                    <p><strong>Refresh your proctor dashboard</strong> so all student statuses are current.</p>
+                </div>
+            </div>
+
+            <div class="step">
+                <span class="step-number">3</span>
+                <div class="step-content">
+                    <p>Click the <strong>three-dot menu</strong> (&#8942;) next to the student's name and select <strong>"Reseat Session."</strong> Confirm when prompted.</p>
+                    <div class="screenshot">
+                        <!-- NEED: Screenshot of three-dot menu with Reseat Session option -->
+                        [Screenshot needed: Actions menu with "Reseat Session" option]
+                    </div>
+                </div>
+            </div>
+
+            <div class="step">
+                <span class="step-number">4</span>
+                <div class="step-content">
+                    <p><strong>Wait for the dashboard to show "Reseat" status</strong> for that student. Refresh again if needed.</p>
+                    <div class="callout callout-info">
+                        <strong>What to look for:</strong> The student's Test Status column will change to show the <span class="status-badge badge-reseat">Reseat</span> badge. You may need to Refresh again to see the update.
+                    </div>
+                </div>
+            </div>
+
+            <div class="step">
+                <span class="step-number">5</span>
+                <div class="step-content">
+                    <p><strong>Now tell the student to log back into TestNav.</strong> Their test will resume where they left off.</p>
+                    <div class="callout callout-info">
+                        <strong>What the student sees:</strong> If a "Session in Use" message appears, the student should click <strong>Retry</strong>. Their test will resume exactly where they left off &mdash; no work is lost.
+                    </div>
+                </div>
+            </div>
+
+            <div class="callout callout-tip">
+                <strong>Tip:</strong> Keep the Refresh button handy throughout testing. The dashboard does not update in real time, and catching an "Exited" status early means less lost testing time.
+            </div>
+        </div>
+    </div>
+
+    <!-- ════════════════════ FOOTER ════════════════════ -->
+    <div class="footer">
+        <p>Oak Grove School District 68 &mdash; Technology Department</p>
+        <p style="margin-top:0.25rem;">Questions? Contact <a href="mailto:huber@ogschool.org">huber@ogschool.org</a></p>
+    </div>
+
+</div>
+
+<!-- ════════════════════ JAVASCRIPT ════════════════════ -->
+<script>
+    function toggleKnownIssues() {
+        const body = document.getElementById('known-issues-body');
+        const header = document.querySelector('.known-issues-header');
+        body.classList.toggle('hidden');
+        header.classList.toggle('collapsed');
+    }
+</script>
+
+</body>
+</html>
